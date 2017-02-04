@@ -9,9 +9,21 @@ const isDev = process.env.NODE_ENV !== 'production';
 const ngrok = (isDev && process.env.ENABLE_TUNNEL) || argv.tunnel ? require('ngrok') : false;
 const resolve = require('path').resolve;
 const app = express();
+const router = express.Router();
+const fs = require('fs');
+const path = require('path');
 
-// If you need a backend, e.g. an API, add your custom backend-specific middleware here
-// app.use('/api', myApi);
+router.get('/clients', (req, res) => {
+  const filePath = path.join(__dirname, 'clients.json');
+  fs.readFile(filePath, {encoding: 'utf-8'}, (err, data) => {
+    if (!err) {
+      res.set({ 'Content-Type': 'application/json' });
+      res.status(200).send(data);
+    }
+  });
+});
+
+app.use('/api', router);
 
 // In production we need to pass these values in instead of relying on webpack
 setup(app, {
