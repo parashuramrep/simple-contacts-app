@@ -1,9 +1,9 @@
-import { Map } from 'immutable';
+import { Map, List } from 'immutable';
 import * as actions from './constants';
 
 const initialState = Map({
   isLoading: false,
-  data: [],
+  data: List(),
 });
 
 function clientsReducer(state = initialState, action) {

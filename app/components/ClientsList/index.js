@@ -1,17 +1,19 @@
 import React from 'react';
+import List from './elements/List';
+import ClientsListItem from './ClientsListItem';
 
 export default function ClientsList(props) {
   const { clients } = props;
 
   return (
-    <div>
+    <List>
       {clients && clients.map((item) => (
-        <div key={item}>{item}</div>
-      ))}
-    </div>
+        <ClientsListItem key={item.getIn(['contact', 'email'])} item={item} />)
+      )}
+    </List>
   );
 }
 
 ClientsList.propTypes = {
-  clients: React.PropTypes.array,
+  clients: React.PropTypes.object,
 };

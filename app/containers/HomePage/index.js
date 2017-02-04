@@ -17,20 +17,22 @@ import { getClients } from './constants';
 
 class HomePage extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
   componentDidMount() {
-    console.log('Calling api');
     this.props.getClients();
   }
 
   render() {
+    const { clients } = this.props;
+
     return (
-      <h1>
-        <ClientsList clients={['hello']} />
-      </h1>
+      <div>
+        <ClientsList clients={clients} />
+      </div>
     );
   }
 }
 
 HomePage.propTypes = {
+  clients: React.PropTypes.object,
   getClients: React.PropTypes.func,
 };
 
