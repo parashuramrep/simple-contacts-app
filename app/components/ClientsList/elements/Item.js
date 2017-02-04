@@ -5,6 +5,7 @@ export default styled.div`
   width: 100%;
   cursor: pointer;
   padding: 10px 15px;
+  background: #fdfdfd;
 
   ${(props) => props.active && 'background: #eee;'}
 

@@ -3,8 +3,9 @@ import * as actions from './constants';
 
 const initialState = Map({
   activeDetail: null,
-  isLoading: false,
   data: List(),
+  isLoading: false,
+  searchQuery: '',
 });
 
 function clientsReducer(state = initialState, action) {
@@ -24,6 +25,9 @@ function clientsReducer(state = initialState, action) {
 
     case actions.SET_CLIENT_DETAIL:
       return state.set('activeDetail', action.id);
+
+    case actions.SET_CLIENT_SEARCH:
+      return state.set('searchQuery', action.value);
 
     default:
       return state;

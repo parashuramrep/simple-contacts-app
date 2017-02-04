@@ -12,8 +12,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { ClientsList, ClientsDetail } from '../../components';
-import { clientsSelector, detailSelector, loadingSelector } from './selectors';
-import { getClients, setClientDetail } from './constants';
+import { detailSelector, loadingSelector, filteredClientsSelector } from './selectors';
+import { getClients, setClientDetail, setClientSearch } from './constants';
 
 class HomePage extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
   componentDidMount() {
@@ -21,14 +21,20 @@ class HomePage extends React.PureComponent { // eslint-disable-line react/prefer
   }
 
   render() {
-    const { clients, setClientDetail, detail } = this.props;
+    const {
+      filteredClients,
+      detail,
+      setClientDetail,
+      setClientSearch,
+    } = this.props;
 
     return (
       <main>
         {detail && <ClientsList
-          clients={clients}
+          clients={filteredClients}
           activeId={detail.getIn(['contact', 'email'])}
           setClientDetail={setClientDetail}
+          setClientSearch={setClientSearch}
         />}
         {detail && <ClientsDetail
           client={detail}
@@ -39,18 +45,20 @@ class HomePage extends React.PureComponent { // eslint-disable-line react/prefer
 }
 
 HomePage.propTypes = {
-  clients: React.PropTypes.object,
   getClients: React.PropTypes.func,
   setClientDetail: React.PropTypes.func,
+  setClientSearch: React.PropTypes.func,
   detail: React.PropTypes.object,
   isLoading: React.PropTypes.bool,
+  filteredClients: React.PropTypes.object,
 };
 
 export default connect((state) => ({
-  clients: clientsSelector(state),
   detail: detailSelector(state),
+  filteredClients: filteredClientsSelector(state),
   isLoading: loadingSelector(state),
 }), {
   getClients,
   setClientDetail,
+  setClientSearch,
 })(HomePage);
