@@ -11,7 +11,7 @@
 
 import React from 'react';
 import { connect } from 'react-redux';
-import { ClientsList, ClientsDetail } from '../../components';
+import { ClientsList, ClientsDetail, Loading } from '../../components';
 import { detailSelector, loadingSelector, filteredClientsSelector } from './selectors';
 import { getClients, setClientDetail, setClientSearch } from './constants';
 
@@ -26,19 +26,33 @@ class HomePage extends React.PureComponent { // eslint-disable-line react/prefer
       detail,
       setClientDetail,
       setClientSearch,
+      isLoading,
     } = this.props;
+
+    const isLoaded = !isLoading && detail;
 
     return (
       <main>
-        {detail && <ClientsList
-          clients={filteredClients}
-          activeId={detail.getIn(['contact', 'email'])}
-          setClientDetail={setClientDetail}
-          setClientSearch={setClientSearch}
-        />}
-        {detail && <ClientsDetail
-          client={detail}
-        />}
+        {isLoaded &&
+          <ClientsList
+            clients={filteredClients}
+            activeId={detail.getIn(['contact', 'email'])}
+            setClientDetail={setClientDetail}
+            setClientSearch={setClientSearch}
+          />
+        }
+
+        {isLoaded &&
+          <ClientsDetail
+            client={detail}
+          />
+        }
+
+        {!isLoaded && <Loading>
+            <p>Loading clients</p>
+            <span className="fa fa-spinner" />
+          </Loading>
+        }
       </main>
     );
   }

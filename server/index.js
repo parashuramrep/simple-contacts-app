@@ -18,7 +18,7 @@ router.get('/clients', (req, res) => {
   fs.readFile(filePath, {encoding: 'utf-8'}, (err, data) => {
     if (!err) {
       res.set({ 'Content-Type': 'application/json' });
-      res.status(200).send(data);
+      setTimeout(() => res.status(200).send(data), 100); // simulate response time
     }
   });
 });
