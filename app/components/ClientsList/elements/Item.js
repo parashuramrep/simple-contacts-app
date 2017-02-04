@@ -6,6 +6,8 @@ export default styled.div`
   cursor: pointer;
   padding: 10px 15px;
 
+  ${(props) => props.active && 'background: #eee;'}
+
   &:hover {
     background: #eee;
   }

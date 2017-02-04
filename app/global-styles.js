@@ -8,5 +8,10 @@ injectGlobal`
     width: 100%;
     padding: 0;
     margin: 0;
+    color: #333;
+  }
+
+  h1 {
+    margin: 20px 0 0;
   }
 `;
