@@ -10,15 +10,32 @@
  */
 
 import React from 'react';
-import { FormattedMessage } from 'react-intl';
-import messages from './messages';
+import { connect } from 'react-redux';
+import { ClientsList } from '../../components';
+import { getClients as getClientsSelector } from './selectors';
+import { getClients } from './constants';
 
-export default class HomePage extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
+class HomePage extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
+  componentDidMount() {
+    console.log('Calling api');
+    this.props.getClients();
+  }
+
   render() {
     return (
       <h1>
-        <FormattedMessage {...messages.header} />
+        <ClientsList clients={['hello']} />
       </h1>
     );
   }
 }
+
+HomePage.propTypes = {
+  getClients: React.PropTypes.func,
+};
+
+export default connect((state) => ({
+  clients: getClientsSelector(state),
+}), {
+  getClients,
+})(HomePage);
